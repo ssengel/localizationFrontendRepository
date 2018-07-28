@@ -1,0 +1,37 @@
+<br>
+<form *ngIf="company">
+  <!-- companyId -->
+  <div class="form-group">
+    <label for="companyId">ID</label>
+    <input type="text" class="form-control" id="companyId" placeholder="Company Id" [value]="company._id" readonly>
+  </div>
+  <!-- companyName companyEmail -->
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="companyName">Name</label>
+      <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Company Email" [value]="company.name" [(ngModel)]="company.name" readonly>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="companyEmail">Email</label>
+      <input type="email" class="form-control" id="companyEmail" name="companyEmail" placeholder="Company Email" [value]="company.email" [(ngModel)]="company.email" readonly>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-secondary">Duzenle</button>
+</form>
+<br>
+
+<h2>Stores</h2>
+<hr>
+<div class="row">
+  <div *ngFor="let store of stores" class="col-md-6">
+    <div class="card" style="margin-bottom: 15px">
+      <div class="card-body">
+        <h5 class="card-title">{{store.name | uppercase}}</h5>
+        <p class="card-text">{{store._id}}</p>
+        <p class="card-text">{{store.map}}</p>
+        <p class="card-text">Notification Count {{store.notifications.length}}</p>
+        <a href="#" class="btn btn-primary">Magaza Detaylari</a>
+      </div>
+    </div>
+  </div>
+</div>

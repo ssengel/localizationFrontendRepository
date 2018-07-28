@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Route } from '@angular/router'
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -10,14 +11,24 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { CompaniesComponent } from './components/companies/companies.component';
-import { StoriesComponent } from './components/stories/stories.component';
+import { StoresComponent } from './components/stores/stores.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { CompanyDetailComponent } from './components/company-detail/company-detail.component';
+import { CompanyService } from './services/company.service';
+import { AuthGuard } from './services/auth.guard';
+import { AuthService } from './services/auth.service';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 const routerConfig: Route[] = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    component: HomeComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {path: 'company', component: CompaniesComponent},
+      {path: 'company/:id', component: CompanyDetailComponent},
+      {path: 'store', component: StoresComponent}
+    ]
   },
   {
     path: 'login',
@@ -26,14 +37,6 @@ const routerConfig: Route[] = [
   {
     path: 'register',
     component: RegisterComponent
-  },
-  {
-    path: 'home',
-    component: HomeComponent,
-    children: [
-      {path: 'companies', component: CompaniesComponent},
-      {path: 'stories', component: StoriesComponent}
-    ]
   },
   {
     path: '**',
@@ -50,14 +53,18 @@ const routerConfig: Route[] = [
     RegisterComponent,
     HomeComponent,
     CompaniesComponent,
-    StoriesComponent,
-    PageNotFoundComponent
+    StoresComponent,
+    PageNotFoundComponent,
+    CompanyDetailComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routerConfig)
+    RouterModule.forRoot(routerConfig),
+    HttpClientModule,
+    FormsModule
+   
   ],
-  providers: [],
+  providers: [CompanyService,AuthService,AuthGuard, {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
