@@ -23,10 +23,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(obj)
       .subscribe((res: any) => {
         localStorage.setItem('token', res.token);
-        console.log(obj);
-        console.log(res.token);
-
-
+        localStorage.setItem('userId', res.user._id);
+        
         this.router.navigate(['']);
       });
   }

@@ -7,6 +7,7 @@ export class User {
     name: String;
     lastName : String;
     email : String;
+    image: any;
     role : String;
     
 }

@@ -18,6 +18,9 @@ import { CompanyService } from './services/company.service';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { ProfileComponent } from './components/profile/profile.component';
+import { UserService } from './services/user.service';
+
 
 const routerConfig: Route[] = [
   {
@@ -25,9 +28,11 @@ const routerConfig: Route[] = [
     component: HomeComponent,
     canActivate: [AuthGuard],
     children: [
+      {path: '', redirectTo: 'company', pathMatch: 'full'},
       {path: 'company', component: CompaniesComponent},
       {path: 'company/:id', component: CompanyDetailComponent},
-      {path: 'store', component: StoresComponent}
+      {path: 'store', component: StoresComponent},
+      {path: 'profile', component: ProfileComponent}
     ]
   },
   {
@@ -55,7 +60,8 @@ const routerConfig: Route[] = [
     CompaniesComponent,
     StoresComponent,
     PageNotFoundComponent,
-    CompanyDetailComponent
+    CompanyDetailComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +70,7 @@ const routerConfig: Route[] = [
     FormsModule
    
   ],
-  providers: [CompanyService,AuthService,AuthGuard, {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}],
+  providers: [UserService,CompanyService,AuthService,AuthGuard, {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
