@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule, Route } from '@angular/router'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
@@ -20,6 +20,12 @@ import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UserService } from './services/user.service';
+import { StoreService } from './services/store.service';
+import { StoreDetailComponent } from './components/store-detail/store-detail.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { CompanyCreateComponent } from './components/company-create/company-create.component';
+import { ErrorHandlerService } from './services/error-handler.service';
+import { GlobalErrorHandler } from './models/global-error-handler';
 
 
 const routerConfig: Route[] = [
@@ -28,11 +34,15 @@ const routerConfig: Route[] = [
     component: HomeComponent,
     canActivate: [AuthGuard],
     children: [
-      {path: '', redirectTo: 'company', pathMatch: 'full'},
-      {path: 'company', component: CompaniesComponent},
-      {path: 'company/:id', component: CompanyDetailComponent},
-      {path: 'store', component: StoresComponent},
-      {path: 'profile', component: ProfileComponent}
+      { path: '', redirectTo: 'wall', pathMatch: 'full' },
+      { path: 'wall', component: WallComponent },
+      { path: 'company', component: CompaniesComponent },
+      { path: 'company/create', component: CompanyCreateComponent },
+      { path: 'company/:id', component: CompanyDetailComponent },
+      { path: 'store', component: StoresComponent },
+      { path: 'store/:id', component: StoreDetailComponent },
+      { path: 'store/:id/notification', component: NotificationsComponent },
+      { path: 'profile', component: ProfileComponent },
     ]
   },
   {
@@ -61,16 +71,28 @@ const routerConfig: Route[] = [
     StoresComponent,
     PageNotFoundComponent,
     CompanyDetailComponent,
-    ProfileComponent
+    ProfileComponent,
+    StoreDetailComponent,
+    NotificationsComponent,
+    CompanyCreateComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routerConfig),
     HttpClientModule,
     FormsModule
-   
+
   ],
-  providers: [UserService,CompanyService,AuthService,AuthGuard, {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}],
+  providers: [
+    UserService,
+    StoreService,
+    CompanyService,
+    AuthService,
+    AuthGuard,
+    ErrorHandlerService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    // { provide: ErrorHandler, useClass: GlobalErrorHandler }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

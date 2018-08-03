@@ -1,0 +1,17 @@
+<br>
+<h2>Create a new company</h2>
+<br>
+<hr>
+
+<form>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" placeholder="Enter Company Name" #name>
+  </div>
+
+  <div class="form-group">
+    <label for="name">Email</label>
+    <input type="email" class="form-control" placeholder="Enter Email" #email>
+  </div>
+  <button (click)="createCompany(name, email)" class="btn btn-block btn-primary">Create Company</button>
+</form>

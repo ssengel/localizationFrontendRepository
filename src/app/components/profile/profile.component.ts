@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   user: User;
-  userId: String;
+  userId: String = '';
   selectedFile: File = null;
   btnUploadState: boolean = true;
 

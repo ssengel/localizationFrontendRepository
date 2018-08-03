@@ -1,3 +1,25 @@
-<p>
-  stores works!
-</p>
+<br>
+<h2>{{title}}</h2>
+<br>
+<table id="example" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Store Name</th>
+      <th>Map</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let store of stores'>
+      <td>{{store._id}}</td>
+      <td>{{store.name}}</td>
+      <td>{{store.map}}</td>
+      <td>
+        <a [routerLink]="['./', store._id]">
+          <button type="button" class="btn btn-secondary">Detail</button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

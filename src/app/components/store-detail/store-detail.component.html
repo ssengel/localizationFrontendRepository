@@ -1,0 +1,82 @@
+<div *ngIf="store">
+  <br>
+  <h2>{{store.name || uppercase }}</h2>
+  <hr>
+  <!-- store info -->
+  <ul class="list-group">
+    <li class="list-group-item">{{store._id}}</li>
+    <li class="list-group-item">{{store.name}}</li>
+    <li class="list-group-item">{{store.map}}</li>
+  </ul>
+
+  <br>
+  <h2>Discounts & Notifications</h2>
+  <hr>
+  <!-- Cards -->
+  <div class="row">
+
+    <div class="col-md-3" style="min-width: 17em;">
+      <a routerLink="./notification" class="list-group-item-action">
+        <div class="card text-black bg-light mb-3">
+          <div class="card-header d-flex justify-content-between align-items-center">Notifications
+            <span class="badge badge-primary badge-pill">{{store.notifications.length}}</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Secondary card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-3" style="min-width: 17em;">
+        <a routerLink="./notification" class="list-group-item-action">
+          <div class="card text-black bg-light mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">Notifications
+              <span class="badge badge-primary badge-pill">{{store.notifications.length}}</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Secondary card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-3" style="min-width: 17em;">
+          <a routerLink="./notification" class="list-group-item-action">
+            <div class="card text-black bg-light mb-3">
+              <div class="card-header d-flex justify-content-between align-items-center">Notifications
+                <span class="badge badge-primary badge-pill">{{store.notifications.length}}</span>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Secondary card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-3" style="min-width: 17em;">
+            <a routerLink="./notification" class="list-group-item-action">
+              <div class="card text-black bg-light mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">Notifications
+                  <span class="badge badge-primary badge-pill">{{store.notifications.length}}</span>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Secondary card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+
+
+
+
+  </div>
+
+  <h2>Map</h2>
+  <hr>
+</div>
