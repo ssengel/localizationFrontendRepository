@@ -1,6 +1,6 @@
 export class Store {
 
-    _id: String;
+    _id?: String;
     name: String;
     map: String;
     dataSet : String;

@@ -28,16 +28,25 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
+
+    const token = JSON.parse(localStorage.getItem('token'));
 
     if (token) {
-      return true;
-    }
-    else {
+      const tokenDate = token.createdAt + token.expiresIn*1000;
+      const now = new Date().getTime();
+      
+      if (tokenDate > now)
+        return true;
+      else {
+        localStorage.clear();
+        this.router.navigate(['login'])
+        return false;
+      }
+    } else {
+      localStorage.clear();
       this.router.navigate(['login'])
       return false;
     }
+
   }
-
-
 }
