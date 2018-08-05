@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { ErrorHandlerService } from './error-handler.service';
 import 'rxjs/add/operator/catch';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private errorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandlerService,
+    private cookieService: CookieService
   ) { }
 
 
@@ -28,25 +30,13 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    const token = JSON.parse(localStorage.getItem('token'));
-
-    if (token) {
-      const tokenDate = token.createdAt + token.expiresIn*1000;
-      const now = new Date().getTime();
-      
-      if (tokenDate > now)
-        return true;
-      else {
-        localStorage.clear();
-        this.router.navigate(['login'])
-        return false;
-      }
-    } else {
-      localStorage.clear();
-      this.router.navigate(['login'])
-      return false;
+    if(currentUser){
+      return true;
     }
 
+    this.router.navigate(['login']);
+    return false;
   }
 }

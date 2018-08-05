@@ -13,5 +13,7 @@
     <label for="name">Email</label>
     <input type="email" class="form-control" placeholder="Enter Email" #email>
   </div>
-  <button (click)="createCompany(name, email)" class="btn btn-block btn-primary">Create Company</button>
+
+  <button [disabled]="loading" (click)="createCompany(name, email)" class="btn btn-block btn-primary">Create Company</button>
+  <app-alert [error]=e rror></app-alert>
 </form>

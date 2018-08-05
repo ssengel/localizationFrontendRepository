@@ -1,0 +1,14 @@
+
+  <div class="card" style="margin-bottom: 15px">
+    <div class="card-header">
+        <h5 class="card-title">{{store.name | uppercase}}</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{store._id}}</p>
+      <p class="card-text">{{store.map}}</p>
+      
+      <a routerLink="/store/{{store._id}}" class="btn btn-primary">Magaza Detaylari</a>
+      <a routerLink="/store/{{store._id}}/notification" class="btn btn-success">Notifications {{store.notifications.length}}</a>
+      <a routerLink="/store/{{store._id}}/discount" class="btn btn-dark">Discounts {{store.discounts.length}}</a>
+    </div>
+  </div>

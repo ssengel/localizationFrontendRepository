@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class CompanyCreateComponent implements OnInit {
 
+  error: Error;
 
   constructor(private companyService: CompanyService, private router: Router) { }
 
@@ -23,9 +24,8 @@ export class CompanyCreateComponent implements OnInit {
     }
 
     this.companyService.create(company).subscribe(
-      res => {
-        this.router.navigate(['/company']);
-      }
+      (res) => { this.router.navigate(['/company']); },
+      (err) => { this.error = err; }
     )
   }
 

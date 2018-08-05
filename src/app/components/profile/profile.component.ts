@@ -17,7 +17,8 @@ export class ProfileComponent implements OnInit {
   btnUploadState: boolean = true;
 
   ngOnInit() {
-    this.userId = localStorage.getItem('userId');
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.userId = currentUser.user._id;
     this.userService.getById(this.userId).subscribe((res:User) => {
       this.user = res;
     });

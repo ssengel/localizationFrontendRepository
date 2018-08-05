@@ -25,7 +25,11 @@ import { StoreDetailComponent } from './components/store-detail/store-detail.com
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { CompanyCreateComponent } from './components/company-create/company-create.component';
 import { ErrorHandlerService } from './services/error-handler.service';
-import { GlobalErrorHandler } from './models/global-error-handler';
+import { GlobalErrorHandler } from './services/global-error-handler';
+import { AlertDirective } from './directives/alert.directive';
+import { AlertComponent } from './components/alert/alert.component';
+import { CardStoreComponent } from './components/card-store/card-store.component';
+import { AuthDirective } from './directives/auth.directive';
 
 
 const routerConfig: Route[] = [
@@ -34,15 +38,15 @@ const routerConfig: Route[] = [
     component: HomeComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'wall', pathMatch: 'full' },
-      { path: 'wall', component: WallComponent },
-      { path: 'company', component: CompaniesComponent },
-      { path: 'company/create', component: CompanyCreateComponent },
-      { path: 'company/:id', component: CompanyDetailComponent },
-      { path: 'store', component: StoresComponent },
-      { path: 'store/:id', component: StoreDetailComponent },
-      { path: 'store/:id/notification', component: NotificationsComponent },
-      { path: 'profile', component: ProfileComponent },
+      { path: '', redirectTo: 'wall', pathMatch: 'full', canActivate:[AuthGuard] },
+      { path: 'wall', component: WallComponent , canActivate:[AuthGuard]},
+      { path: 'company', component: CompaniesComponent, canActivate:[AuthGuard] },
+      { path: 'company/create', component: CompanyCreateComponent, canActivate:[AuthGuard] },
+      { path: 'company/:id', component: CompanyDetailComponent, canActivate:[AuthGuard] },
+      { path: 'store', component: StoresComponent , canActivate:[AuthGuard]},
+      { path: 'store/:id', component: StoreDetailComponent, canActivate:[AuthGuard] },
+      { path: 'store/:id/notification', component: NotificationsComponent , canActivate:[AuthGuard]},
+      { path: 'profile', component: ProfileComponent , canActivate:[AuthGuard]},
     ]
   },
   {
@@ -74,7 +78,11 @@ const routerConfig: Route[] = [
     ProfileComponent,
     StoreDetailComponent,
     NotificationsComponent,
-    CompanyCreateComponent
+    CompanyCreateComponent,
+    AlertDirective,
+    AlertComponent,
+    CardStoreComponent,
+    AuthDirective
   ],
   imports: [
     BrowserModule,
@@ -91,6 +99,7 @@ const routerConfig: Route[] = [
     AuthGuard,
     ErrorHandlerService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    CookieService
     // { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ],
   bootstrap: [AppComponent]

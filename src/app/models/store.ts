@@ -5,5 +5,6 @@ export class Store {
     map: String;
     dataSet : String;
     notifications: Array<any>;
+    discounts: Array<any>;
 
 }

@@ -7,29 +7,30 @@ import 'rxjs/add/operator/do';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    private token = '';
     constructor(private router:Router){}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const tokenObj = localStorage.getItem('token')
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        if(tokenObj){
-            this.token = JSON.parse(tokenObj).token;
+        if(currentUser){
+            req = req.clone({
+                headers: req.headers.set('x-access-token', currentUser.token)
+            })
         }
         
-        const newReq = req.clone({
-            headers: req.headers.set('x-access-token', this.token)
-        })
-        
-        return next.handle(newReq)
+        return next.handle(req)
             .do(
                 (succ:HttpResponse<any>) => {
-                    console.log(succ.body);
+
                 },
                 (err:HttpErrorResponse) => {
                     if(err.status === 403){
                         this.router.navigate(['']);
+                    }
+                    if(err.status === 401){
+                        localStorage.removeItem('currentUser');
+                        this.router.navigate(['login'])
                     }
                 }
             )
