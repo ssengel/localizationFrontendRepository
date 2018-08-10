@@ -1,10 +1,10 @@
+
+import {catchError} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { ErrorHandlerService } from './error-handler.service';
-import 'rxjs/add/operator/catch';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthService {
@@ -14,19 +14,18 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private errorHandlerService: ErrorHandlerService,
-    private cookieService: CookieService
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
 
   register(user: any) {
-    return this.http.post<User>(this.url + 'register', user)
-      .catch(this.errorHandlerService.handleError)
+    return this.http.post<User>(this.url + 'register', user).pipe(
+      catchError(this.errorHandlerService.handleError))
   }
 
   login(user: any) {
-    return this.http.post<User>(this.url + 'login', user)
-      .catch(this.errorHandlerService.handleError)
+    return this.http.post<User>(this.url + 'login', user).pipe(
+      catchError(this.errorHandlerService.handleError))
   }
 
   isLoggedIn(): boolean {

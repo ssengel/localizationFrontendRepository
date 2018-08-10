@@ -1,21 +1,19 @@
+import { throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw'
-import { Router } from '@angular/router';
 
 @Injectable()
-export class ErrorHandlerService{
+export class ErrorHandlerService {
 
   constructor() { }
 
-  handleError(error:Response){
-    if(error.status === 401) {
-      return Observable.throw('Yetkilendirme Hatasi');
+  handleError(error: Response) {
+    if (error.status === 401) {
+      return throwError('Yetkilendirme Hatasi');
     }
-    else if(error.status === 403) {
-      return Observable.throw('Yetki Seviyeniz Yeterli Degil')
+    else if (error.status === 403) {
+      return throwError('Yetki Seviyeniz Yeterli Degil')
     }
-    else return Observable.throw('Beklenmedik bir hata olustu !!')
+    else return throwError('Beklenmedik bir hata olustu !!')
   }
 
 }

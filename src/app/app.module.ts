@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler,NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule, Route } from '@angular/router'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
@@ -88,7 +88,8 @@ const routerConfig: Route[] = [
     BrowserModule,
     RouterModule.forRoot(routerConfig),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+
 
   ],
   providers: [
@@ -99,7 +100,6 @@ const routerConfig: Route[] = [
     AuthGuard,
     ErrorHandlerService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    CookieService
     // { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ],
   bootstrap: [AppComponent]

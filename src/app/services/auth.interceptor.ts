@@ -1,8 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/do';
+import {tap } from 'rxjs/operators'
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -19,8 +19,8 @@ export class AuthInterceptor implements HttpInterceptor {
             })
         }
         
-        return next.handle(req)
-            .do(
+        return next.handle(req).pipe(
+            tap(
                 (succ:HttpResponse<any>) => {
 
                 },
@@ -33,6 +33,6 @@ export class AuthInterceptor implements HttpInterceptor {
                         this.router.navigate(['login'])
                     }
                 }
-            )
+            ))
     }
 }
